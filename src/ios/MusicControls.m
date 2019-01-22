@@ -52,6 +52,8 @@ MusicControlsInfo * musicControlsSettings;
 }
 
 - (void) updateIsPlaying: (CDVInvokedUrlCommand *) command {
+    
+    
     NSDictionary * musicControlsInfoDict = [command.arguments objectAtIndex:0];
     MusicControlsInfo * musicControlsInfo = [[MusicControlsInfo alloc] initWithDictionary:musicControlsInfoDict];
     NSNumber * elapsed = [NSNumber numberWithDouble:[musicControlsInfo elapsed]];
@@ -60,6 +62,13 @@ MusicControlsInfo * musicControlsSettings;
     if (!NSClassFromString(@"MPNowPlayingInfoCenter")) {
         return;
     }
+    
+    if(![musicControlsInfo isPlaying]){
+        nowPlayingCenter.playbackState = MPMusicPlaybackStatePaused;
+    }else{
+        nowPlayingCenter.playbackState = MPMusicPlaybackStatePlaying;
+    }
+    
 
     MPNowPlayingInfoCenter * nowPlayingCenter = [MPNowPlayingInfoCenter defaultCenter];
     NSMutableDictionary * updatedNowPlayingInfo = [NSMutableDictionary dictionaryWithDictionary:nowPlayingCenter.nowPlayingInfo];
