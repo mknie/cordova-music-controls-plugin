@@ -63,15 +63,15 @@ MusicControlsInfo * musicControlsSettings;
         return;
     }
     
+    MPNowPlayingInfoCenter * nowPlayingCenter = [MPNowPlayingInfoCenter defaultCenter];
+    NSMutableDictionary * updatedNowPlayingInfo = [NSMutableDictionary dictionaryWithDictionary:nowPlayingCenter.nowPlayingInfo];
+    
+    
     if(![musicControlsInfo isPlaying]){
         nowPlayingCenter.playbackState = MPMusicPlaybackStatePaused;
     }else{
         nowPlayingCenter.playbackState = MPMusicPlaybackStatePlaying;
     }
-    
-
-    MPNowPlayingInfoCenter * nowPlayingCenter = [MPNowPlayingInfoCenter defaultCenter];
-    NSMutableDictionary * updatedNowPlayingInfo = [NSMutableDictionary dictionaryWithDictionary:nowPlayingCenter.nowPlayingInfo];
     
     [updatedNowPlayingInfo setObject:elapsed forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
     [updatedNowPlayingInfo setObject:playbackRate forKey:MPNowPlayingInfoPropertyPlaybackRate];
